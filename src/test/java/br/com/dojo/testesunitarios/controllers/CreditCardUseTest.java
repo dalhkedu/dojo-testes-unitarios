@@ -72,44 +72,6 @@ public class CreditCardUseTest {
     }
 
     @Test
-    @DisplayName("Usar credito do cartao de credito com retorno de erro")
-    public void useCreditCardErrorTest() throws Exception {
-
-        //Cenario
-        var parameter = new UseCreditCardParameter("2563.63");
-        var model = new CreditCardModel(
-                "1234.4321.5678.8765",
-                "Super Mario Bros",
-                "04/30",
-                "04/22",
-                "999",
-                "97321f9b-b662-41eb-9f09-76e5c677823b",
-                "3069.52",
-                "221.32",
-                "3290.84"
-        );
-
-        //Ação
-        given(this.iUseCreditCardService.getCreditCardById(anyInt())).willReturn(model);
-        given(this.iUseCreditCardService.updateBalanceCard(any(), any())).willReturn(model);
-        willThrow(Exception.class).given(this.iUseCreditCardService)
-                .verifyBalance(any(), any());
-
-        var json = new ObjectMapper().writeValueAsString(parameter);
-
-        var request = MockMvcRequestBuilders
-                .put("/use/1")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .content(json);
-
-        //Validação
-        this.mvc.perform(request)
-                .andExpect(status().is5xxServerError());
-    }
-
-
-    @Test
     @DisplayName("Consultar o saldo do cartao de credito")
     public void balanceCreditCardTest() throws Exception {
 

@@ -94,6 +94,21 @@ public class SolicitationCreditCardServiceTest {
     }
 
     @Test
+    @DisplayName("Erro ao Criar cartao novo para cliente")
+    public void createCardError() {
+        var clientId = "cb3243cd-6069-49b7-aa10-862cb04449b3";
+
+        var exception = assertThrows(
+                RuntimeException.class, () ->
+                        this.service.createCard(null, clientId));
+
+        String expectedMessage = "Nome ou id nulo ou vazio";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
     @DisplayName("Salvar cartao criado na base de dados para cliente")
     public void save() {
         var card = new CreditCardModel(

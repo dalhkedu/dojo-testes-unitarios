@@ -45,6 +45,9 @@ public class SolicitationCreditCardService implements ISolicitationCreditCardSer
 
     @Override
     public CreditCardModel createCard(String fullName, String clientId) {
+        if ((fullName == null || fullName.isBlank()) || (clientId == null || clientId.isBlank())) {
+            throw new RuntimeException("Nome ou id nulo ou vazio");
+        }
         return new CreditCardModel(
                 "1234.4321.5647.9999",
                 fullName,
